@@ -1,0 +1,14 @@
+[package]
+name = "minisql"
+version = "0.1.0"
+edition = "2021"
+authors = ["Elias Rohrer <dev@tnull.de>"]
+license = "MIT OR Apache-2.0"
+rust-version = "1.63.0"
+description = "A minimal SQLite implementation."
+repository = "https://github.com/tnull/minisql"
+readme = "README.md"
+keywords = ["sql", "sqlite"]
+categories = ["database"]
+
+[dependencies]
