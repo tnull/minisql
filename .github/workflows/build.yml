@@ -45,14 +45,39 @@ jobs:
         if: "matrix.toolchain == 'stable'"
         run: echo "RUSTFLAGS=-D warnings" >> "$GITHUB_ENV"
       - name: Build on Rust ${{ matrix.toolchain }}
-        run: cargo build --verbose --color always
-      - name: Build documentation on Rust ${{ matrix.toolchain }}
-        if: "matrix.platform != 'windows-latest' || matrix.toolchain != '1.63.0'"
+        if: "matrix.platform != 'windows-latest'"
         run: |
-          cargo doc --release --verbose --color always
-          cargo doc --document-private-items --verbose --color always
+          #cargo build --verbose --color always --features sqlite
+          cargo build --verbose --color always --features sqlite-bundled
+          #cargo build --verbose --color always --features sqlite-sqlcipher
+          cargo build --verbose --color always --features sqlite-bundled-sqlcipher
+      - name: Build on Rust ${{ matrix.toolchain }}
+        if: "matrix.platform == 'windows-latest'"
+        run: |
+          cargo build --verbose --color always --features sqlite-bundled-windows
+      - name: Build documentation on Rust ${{ matrix.toolchain }}
+        run: |
+          cargo doc --release --verbose --color always --features sqlite
+          cargo doc --document-private-items --verbose --color always --features sqlite
       - name: Check release build on Rust ${{ matrix.toolchain }}
-        run: cargo check --release --verbose --color always
+        if: "matrix.platform != 'windows-latest'"
+        run: |
+          #cargo check --release --verbose --color always --features sqlite
+          cargo check --release --verbose --color always --features sqlite-bundled
+          #cargo check --release --verbose --color always --features sqlite-sqlcipher
+          cargo check --release --verbose --color always --features sqlite-bundled-sqlcipher
+      - name: Check release build on Rust ${{ matrix.toolchain }}
+        if: "matrix.platform == 'windows-latest'"
+        run: |
+          cargo check --release --verbose --color always --features sqlite-bundled-windows
       - name: Test on Rust ${{ matrix.toolchain }}
         if: "matrix.platform != 'windows-latest'"
-        run: cargo test
+        run: |
+          #cargo test --verbose --color always --features sqlite
+          cargo test --verbose --color always --features sqlite-bundled
+          #cargo test --verbose --color always --features sqlite-sqlcipher
+          cargo test --verbose --color always --features sqlite-bundled-sqlcipher
+      - name: Test on Rust ${{ matrix.toolchain }}
+        if: "matrix.platform == 'windows-latest'"
+        run: |
+          cargo test --verbose --color always --features sqlite-bundled-windows
