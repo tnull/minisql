@@ -57,8 +57,8 @@ jobs:
           cargo build --verbose --color always --features sqlite-bundled-windows
       - name: Build documentation on Rust ${{ matrix.toolchain }}
         run: |
-          cargo doc --release --verbose --color always
-          cargo doc --document-private-items --verbose --color always
+          cargo doc --release --verbose --color always --features sqlite
+          cargo doc --document-private-items --verbose --color always --features sqlite
       - name: Check release build on Rust ${{ matrix.toolchain }}
         if: "matrix.platform != 'windows-latest'"
         run: |

@@ -12,11 +12,13 @@ keywords = ["sql", "sqlite"]
 categories = ["database"]
 
 [features]
-#sqlite = ["libsqlite3-sys"]
-sqlite-bundled = ["libsqlite3-sys/bundled"]
+# TODO: drop this convenience default feature.
+default = ["sqlite"]
+sqlite = ["libsqlite3-sys"]
+sqlite-bundled = ["sqlite", "libsqlite3-sys/bundled"]
 #sqlite-sqlcipher = ["libsqlite3-sys/sqlcipher"]
-sqlite-bundled-sqlcipher = ["libsqlite3-sys/bundled-sqlcipher"]
-sqlite-bundled-windows = ["libsqlite3-sys/bundled-windows"]
+sqlite-bundled-sqlcipher = ["sqlite", "libsqlite3-sys/bundled-sqlcipher"]
+sqlite-bundled-windows = ["sqlite", "libsqlite3-sys/bundled-windows"]
 
 [dependencies]
 libsqlite3-sys = { version = "0.30.1", default-features = false, features = ["min_sqlite_version_3_14_0"], optional = true }
